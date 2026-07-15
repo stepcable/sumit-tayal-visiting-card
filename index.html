@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>STEP | Scan QR Code</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 10% 30%, #0a1a2f, #030b16);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Inter', sans-serif;
+            padding: 24px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background Glows */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #d8b46a30 0%, transparent 70%);
+            top: -200px;
+            right: -200px;
+            border-radius: 50%;
+            pointer-events: none;
+            filter: blur(100px);
+            animation: glowPulse 6s ease-in-out infinite alternate;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #4a8db730 0%, transparent 70%);
+            bottom: -150px;
+            left: -150px;
+            border-radius: 50%;
+            pointer-events: none;
+            filter: blur(120px);
+            animation: glowPulse 8s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes glowPulse {
+            0% { opacity: 0.5; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Floating Particles */
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(216, 180, 106, 0.15);
+            pointer-events: none;
+            animation: floatParticle 15s infinite linear;
+        }
+
+        .particle:nth-child(1) { width: 80px; height: 80px; top: 10%; left: 5%; animation-delay: 0s; }
+        .particle:nth-child(2) { width: 120px; height: 120px; bottom: 15%; right: 8%; animation-delay: 3s; }
+        .particle:nth-child(3) { width: 60px; height: 60px; top: 50%; left: 2%; animation-delay: 6s; }
+
+        @keyframes floatParticle {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+            25% { transform: translate(30px, -40px) scale(1.1); opacity: 0.6; }
+            50% { transform: translate(-20px, 30px) scale(0.9); opacity: 0.3; }
+            75% { transform: translate(40px, 20px) scale(1.2); opacity: 0.6; }
+        }
+
+        .card {
+            width: 460px;
+            max-width: 100%;
+            background: rgba(8, 22, 44, 0.70);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-radius: 48px;
+            border: 1px solid rgba(216, 180, 106, 0.15);
+            box-shadow: 0 40px 90px rgba(0, 0, 0, 0.8), 
+                        0 0 60px rgba(216, 180, 106, 0.05),
+                        inset 0 1px 0 rgba(216, 180, 106, 0.08);
+            padding: 36px 30px 32px;
+            color: #fff;
+            position: relative;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .card:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 50px 100px rgba(0, 0, 0, 0.8), 0 0 80px rgba(216, 180, 106, 0.08);
+        }
+
+        /* Animated Border Glow */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            bottom: -1px;
+            border-radius: 48px;
+            background: linear-gradient(135deg, rgba(216, 180, 106, 0.3), transparent 50%, rgba(216, 180, 106, 0.1));
+            z-index: -1;
+            opacity: 0.6;
+            animation: borderGlow 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes borderGlow {
+            0% { opacity: 0.4; }
+            100% { opacity: 0.8; }
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #d8b46a, #f5d78e, #d8b46a, transparent);
+            border-radius: 100%;
+            opacity: 0.8;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { opacity: 0.4; width: 40%; }
+            50% { opacity: 1; width: 80%; }
+        }
+
+        /* ===== BADA LOGO ===== */
+        .logo-img {
+            height: 130px;
+            width: auto;
+            filter: drop-shadow(0 8px 30px rgba(0, 0, 0, 0.4)) drop-shadow(0 0 40px rgba(216, 180, 106, 0.1));
+            object-fit: contain;
+            margin-bottom: 8px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            animation: logoFloat 5s ease-in-out infinite;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-img:hover {
+            transform: scale(1.03);
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        .divider {
+            width: 80px;
+            height: 3px;
+            margin: 12px auto 18px;
+            border-radius: 20px;
+            background: linear-gradient(90deg, #d8b46a, #f2d59e, #d8b46a);
+            box-shadow: 0 0 20px rgba(216, 180, 106, 0.2);
+            animation: dividerPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes dividerPulse {
+            0%, 100% { width: 80px; opacity: 0.7; }
+            50% { width: 120px; opacity: 1; }
+        }
+
+        /* QR Container */
+        .qr-container {
+            width: 210px;
+            height: 210px;
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 14px;
+            margin: 20px auto 20px;
+            box-shadow: 0 20px 60px rgba(216, 180, 106, 0.15),
+                        0 0 0 2px rgba(216, 180, 106, 0.08);
+            border: 1px solid rgba(216, 180, 106, 0.12);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+        }
+
+        .qr-container::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 30px;
+            background: linear-gradient(135deg, rgba(216, 180, 106, 0.2), transparent, rgba(216, 180, 106, 0.1));
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .qr-container:hover {
+            transform: scale(1.04) rotate(1deg);
+            box-shadow: 0 30px 80px rgba(216, 180, 106, 0.25),
+                        0 0 0 3px rgba(216, 180, 106, 0.15);
+        }
+
+        .qr-container:hover::before {
+            opacity: 1;
+        }
+
+        .qr-container img {
+            width: 100%;
+            height: 100%;
+            border-radius: 18px;
+        }
+
+        /* Scan Button */
+        .scan-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #d8b46a, #e8c77a, #d8b46a);
+            padding: 16px 44px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 16px;
+            color: #06162f;
+            box-shadow: 0 12px 40px rgba(216, 180, 106, 0.25);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: none;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            margin-top: 8px;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scan-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent, rgba(255,255,255,0.2), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .scan-btn:hover::before {
+            transform: translateX(100%);
+        }
+
+        .scan-btn i {
+            font-size: 18px;
+        }
+
+        .scan-btn:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(216, 180, 106, 0.35);
+            background: linear-gradient(135deg, #e8c77a, #f0d68a, #e8c77a);
+        }
+
+        .scan-btn:active {
+            transform: scale(0.96);
+        }
+
+        .info-text {
+            font-size: 13px;
+            color: #8899aa;
+            margin-top: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .info-text i {
+            margin-right: 8px;
+            color: #d8b46a;
+        }
+
+        /* Profile Mini - Modern */
+        .profile-mini {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 16px 22px;
+            border-radius: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            margin-top: 28px;
+            text-align: left;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-mini::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(216, 180, 106, 0.04), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .profile-mini:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(216, 180, 106, 0.12);
+            transform: translateX(4px);
+        }
+
+        .profile-mini:hover::before {
+            opacity: 1;
+        }
+
+        .profile-mini .avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(216, 180, 106, 0.2), rgba(216, 180, 106, 0.05));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            color: #d8b46a;
+            border: 2px solid rgba(216, 180, 106, 0.2);
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .profile-mini:hover .avatar {
+            border-color: #d8b46a;
+            box-shadow: 0 0 30px rgba(216, 180, 106, 0.15);
+        }
+
+        .profile-mini .info h4 {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+
+        .profile-mini .info p {
+            font-size: 13px;
+            color: #d8b46a;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .profile-mini .info .small {
+            font-size: 11px;
+            color: #a5b9d0;
+            font-weight: 400;
+            opacity: 0.8;
+        }
+
+        .profile-mini .info .small i {
+            margin-right: 4px;
+        }
+
+        /* Footer */
+        .footer-note {
+            margin-top: 28px;
+            font-size: 11px;
+            letter-spacing: 2.5px;
+            color: #687a92;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            padding-top: 20px;
+            position: relative;
+        }
+
+        .footer-note::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #d8b46a, transparent);
+        }
+
+        .footer-note strong {
+            color: #d8b46a;
+            font-weight: 600;
+            letter-spacing: 3px;
+            display: block;
+            margin-top: 6px;
+            font-size: 13px;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .card {
+                padding: 28px 18px;
+                border-radius: 36px;
+            }
+            .qr-container {
+                width: 170px;
+                height: 170px;
+                padding: 10px;
+            }
+            .logo-img {
+                height: 85px;
+            }
+            .scan-btn {
+                padding: 14px 30px;
+                font-size: 14px;
+            }
+            .profile-mini {
+                padding: 14px 16px;
+                gap: 14px;
+            }
+            .profile-mini .avatar {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+            }
+            .profile-mini .info h4 {
+                font-size: 16px;
+            }
+            .particle {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating Particles -->
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+
+    <!-- ===== QR CODE PAGE ===== -->
+    <div class="card">
+
+        <!-- Sirf Bada Logo -->
+        <img src="logo wires and cable.png" alt="STEP Wires & Cables Logo" class="logo-img" />
+        <div class="divider"></div>
+
+        <!-- QR Code -->
+        <div class="qr-container">
+            <img id="qrImage" src="" alt="QR Code" />
+        </div>
+
+        <button class="scan-btn" onclick="openFullCard()">
+            <i class="fa-solid fa-qrcode"></i> Open Full Card
+        </button>
+        <p class="info-text"><i class="fa-solid fa-mobile-screen-button"></i> QR code scan karke poori visiting card dekhen</p>
+
+        <!-- Mini Profile - Sumit Tayal -->
+        <div class="profile-mini">
+            <div class="avatar">
+                <i class="fa-solid fa-user-tie"></i>
+            </div>
+            <div class="info">
+                <h4>Mr. Sumit Tayal</h4>
+                <p>Director</p>
+                <div class="small"><i class="fas fa-building"></i> STEP Wires &amp; Cables</div>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            <i class="fas fa-circle" style="color:#d8b46a; font-size:6px; vertical-align:middle; margin-right:8px;"></i>
+            POWERED BY <strong>STEP WIRES &amp; CABLES</strong>
+        </div>
+
+    </div>
+
+    <script>
+        // ============================================================
+        // QR CODE GENERATE - Deploy ke baad bhi kaam karega
+        // ============================================================
+        
+        function generateQRCode() {
+            // ✅ Dynamic URL - yeh deploy ke baad bhi kaam karega
+            // Current domain + /card.html
+            const baseUrl = window.location.origin + window.location.pathname.replace('index.html', '');
+            const fullCardUrl = baseUrl + 'card.html';
+            
+            // QR code generate karo
+            const qrImage = document.getElementById('qrImage');
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(fullCardUrl)}&bgcolor=ffffff&color=0a1a2f&margin=20`;
+            qrImage.src = qrUrl;
+            qrImage.alt = 'QR Code - Scan to open full visiting card';
+            
+            console.log('✅ QR Code generated for: ' + fullCardUrl);
+        }
+
+        // Open Full Card Page
+        function openFullCard() {
+            const baseUrl = window.location.origin + window.location.pathname.replace('index.html', '');
+            window.location.href = baseUrl + 'card.html';
+        }
+
+        // Page load par QR code generate karo
+        window.onload = function() {
+            generateQRCode();
+        };
+    </script>
+
+</body>
+</html>
