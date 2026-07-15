@@ -7,11 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             background: radial-gradient(circle at 10% 30%, #0a1a2f, #030b16);
@@ -66,14 +62,8 @@
         }
 
         @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .full-card::before {
@@ -89,6 +79,7 @@
             opacity: 0.7;
         }
 
+        /* ✅ LOGO FIX - Proper path */
         .logo-full {
             height: 130px;
             width: auto;
@@ -130,23 +121,9 @@
             flex-shrink: 0;
         }
 
-        .profile-full .info h3 {
-            font-size: 21px;
-            font-weight: 700;
-        }
-
-        .profile-full .info p {
-            font-size: 14px;
-            color: #d8b46a;
-            font-weight: 500;
-            margin-top: 2px;
-        }
-
-        .profile-full .info .tag {
-            font-size: 12px;
-            color: #a5b9d0;
-            font-weight: 400;
-        }
+        .profile-full .info h3 { font-size: 21px; font-weight: 700; }
+        .profile-full .info p { font-size: 14px; color: #d8b46a; font-weight: 500; margin-top: 2px; }
+        .profile-full .info .tag { font-size: 12px; color: #a5b9d0; font-weight: 400; }
 
         .actions-full {
             display: grid;
@@ -169,17 +146,8 @@
             border: 1px solid transparent;
         }
 
-        .action-full i {
-            font-size: 22px;
-            color: #d8b46a;
-            transition: 0.3s;
-        }
-
-        .action-full span {
-            font-size: 12px;
-            font-weight: 500;
-            color: #cbd8e8;
-        }
+        .action-full i { font-size: 22px; color: #d8b46a; transition: 0.3s; }
+        .action-full span { font-size: 12px; font-weight: 500; color: #cbd8e8; }
 
         .action-full:hover {
             background: #d8b46a;
@@ -187,11 +155,8 @@
             transform: translateY(-4px);
             box-shadow: 0 12px 30px rgba(216, 180, 106, 0.20);
         }
-
         .action-full:hover i,
-        .action-full:hover span {
-            color: #081835;
-        }
+        .action-full:hover span { color: #081835; }
 
         .contact-full {
             display: flex;
@@ -216,23 +181,9 @@
             border-color: rgba(216, 180, 106, 0.10);
         }
 
-        .contact-item-full i {
-            width: 28px;
-            font-size: 20px;
-            color: #d8b46a;
-            text-align: center;
-        }
-
-        .contact-item-full .info h4 {
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .contact-item-full .info p {
-            font-size: 13px;
-            color: #b7c7db;
-            margin-top: 2px;
-        }
+        .contact-item-full i { width: 28px; font-size: 20px; color: #d8b46a; text-align: center; }
+        .contact-item-full .info h4 { font-size: 14px; font-weight: 600; }
+        .contact-item-full .info p { font-size: 13px; color: #b7c7db; margin-top: 2px; }
 
         .social-full {
             display: flex;
@@ -351,27 +302,14 @@
             font-family: 'Inter', sans-serif;
         }
 
-        .back-btn:hover {
-            background: rgba(255, 255, 255, 0.10);
-        }
+        .back-btn:hover { background: rgba(255, 255, 255, 0.10); }
 
         @media (max-width: 480px) {
-            .full-card {
-                padding: 28px 18px;
-            }
-            .actions-full {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .profile-full {
-                flex-direction: column;
-                text-align: center;
-            }
-            .btn-group-full {
-                flex-direction: column;
-            }
-            .logo-full {
-                height: 90px;
-            }
+            .full-card { padding: 28px 18px; }
+            .actions-full { grid-template-columns: repeat(2, 1fr); }
+            .profile-full { flex-direction: column; text-align: center; }
+            .btn-group-full { flex-direction: column; }
+            .logo-full { height: 90px; }
         }
     </style>
 </head>
@@ -379,6 +317,7 @@
 
     <div class="full-card">
 
+        <!-- ✅ LOGO - Proper path with space -->
         <img src="logo wires and cable.png" alt="STEP Logo" class="logo-full" />
         <div class="divider-full"></div>
 
@@ -440,9 +379,7 @@
             <a href="https://www.linkedin.com/company/step-cables1/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
         </div>
 
-        <!-- Buttons -->
         <div class="btn-group-full">
-            <!-- Save Contact Button - Directly opens phone's contact save -->
             <button class="btn-gold" onclick="saveContact()">
                 <i class="fa-regular fa-address-card"></i> Save Contact
             </button>
@@ -465,28 +402,17 @@
     </div>
 
     <script>
-        // ============================================================
-        // SAVE CONTACT - Directly opens phone's native contact save
-        // ============================================================
         function saveContact() {
-            const name = 'Mr. Sumit Tayal';
-            const phone = '+919811111372';
-            const email = 'sumittayal@thestepindia.com';
-            const company = 'STEP Wires & Cables';
-            
-            // Create vCard data
             const vcard = `BEGIN:VCARD
         VERSION:3.0
-        FN:${name}
-        ORG:${company}
+        FN:Mr. Sumit Tayal
+        ORG:STEP Wires & Cables
         TITLE:Director
-        TEL:${phone}
-        EMAIL:${email}
+        TEL:+919811111372
+        EMAIL:sumittayal@thestepindia.com
         URL:https://www.stepcable.com
         ADR:;;Stellar 1425, Sector 142, Noida;;;;
         END:VCARD`;
-            
-            // Create blob and download as .vcf file
             const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
@@ -496,16 +422,12 @@
             document.body.removeChild(link);
             URL.revokeObjectURL(link.href);
             
-            // Also try to open with tel: (for Android/iOS)
-            // This will open the phone's native contact save
+            // Also open dialer for quick save option
             setTimeout(() => {
-                window.location.href = `tel:${phone}`;
-            }, 100);
+                window.location.href = 'tel:+919811111372';
+            }, 300);
         }
 
-        // ============================================================
-        // SHARE CARD
-        // ============================================================
         async function shareCard() {
             if (navigator.share) {
                 try {
